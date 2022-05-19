@@ -18,13 +18,10 @@ int main (){
     cout<<"Number of channels of the image: "<<channels<<endl;
     cout<<endl;
 
-    //recorrer los primeros 10 pixeles de la imagen
-
     for(unsigned char *p = image;p!=image + 30; p+=channels){
       cout<< *p+0<<" "<<*p+1<<" "<<*p +2<<endl;
     }
 
-  //Retornar valores RGB de un pixel en especifico
     const size_t RGB = 3;
     int xPosition = 3, yPosition = 80;
     size_t index = RGB * (yPosition * width + xPosition);
@@ -33,7 +30,6 @@ int main (){
           << static_cast<int>(image[index + 1]) << " "  //green value
           << static_cast<int>(image[index + 2]) << " "<<endl; //blue value
 
-    //Limpiar 
     stbi_image_free(image);
     return 0;
 }
