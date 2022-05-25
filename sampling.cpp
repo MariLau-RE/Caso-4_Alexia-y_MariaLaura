@@ -1,35 +1,17 @@
 #include <bits/stdc++.h>
+#include<time.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "headers/stb_image.h"
 #include "headers/quadrant.hpp"
 
-
-
 using namespace std;
 
 
-int width, height, channels;
-
-void randomPointsX(){
-
-    int pointX= rand()% width +1;
-    cout<<"pointX: "<<pointX<<endl;
-
-}
-
-void randomPointsY(){
-
-    int pointY= rand()% height +1;
-    cout<<"pointY: "<<pointY<<endl;
-
-}
-
-
-
 void sampling() {
-    vector<Quadrant*> quadrants;
+    //vector<Quadrant*> quadrants;
+    int width, height, channels;
 
-    unsigned char *image = stbi_load("image.jpg", &width, &height, &channels, 0);
+    unsigned char *image = stbi_load("images/image.jpg", &width, &height, &channels, 0);
     size_t imageSize = width * height * channels;
     int area = width * height;
 
@@ -42,6 +24,26 @@ void sampling() {
     } else {
         cout << "Image not loaded" << endl;
     }
+
+    srand(time(0)); // Use current time as seed for random generator
+    int pointX= rand()% width +1;
+    int pointY= rand()% height +1;
+    cout<<"pointX: "<<pointX<<endl;
+    cout<<"pointY: "<<pointY<<endl;
+
+    const size_t RGB = 3;
+    size_t index = RGB * (pointY * width + pointX);
+    cout << "RGB pixel: " 
+          << static_cast<int>(image[index + 0]) << " "  //red value
+          << static_cast<int>(image[index + 1]) << " "  //green value
+          << static_cast<int>(image[index + 2]) << " "<<endl; //blue value
+
+    stbi_image_free(image);
+
+
+
+
+
 
 
 
@@ -93,7 +95,6 @@ void sampling() {
 int main(){
 
     sampling();
-    randomPointsX();
-    randomPointsY();
+    
 
 }
