@@ -1,22 +1,35 @@
 #include <bits/stdc++.h>
-#include "stb_image.h"
-#include "quadrant.hpp"
-
 #define STB_IMAGE_IMPLEMENTATION
+#include "headers/stb_image.h"
+#include "headers/quadrant.hpp"
+
+
 
 using namespace std;
 
-int randomPoints(){
-    
+
+int width, height, channels;
+
+void randomPointsX(){
+
+    int pointX= rand()% width +1;
+    cout<<"pointX: "<<pointX<<endl;
+
+}
+
+void randomPointsY(){
+
+    int pointY= rand()% height +1;
+    cout<<"pointY: "<<pointY<<endl;
+
 }
 
 
 
-int sampling() {
+void sampling() {
     vector<Quadrant*> quadrants;
 
-    int width, height, channels;
-    unsigned char *image = stbi_load("dias-de-fiesta-y-tu-con-la-cara-cansada-e1573658537875.jpg", &width, &height, &channels, 0);
+    unsigned char *image = stbi_load("image.jpg", &width, &height, &channels, 0);
     size_t imageSize = width * height * channels;
     int area = width * height;
 
@@ -43,7 +56,7 @@ int sampling() {
     quadrants.push_back(&rightBottom);*/
 
 
-    const size_t RGB = 3;
+    /*const size_t RGB = 3;
 
 
     for (int i = 0; i < quadrants.size(); i++) {
@@ -73,6 +86,14 @@ int sampling() {
         cout << "Quadrant " << i << endl;
         quadrant->getRanges();
         i++;
-    }
+    }*/
     
+}
+
+int main(){
+
+    sampling();
+    randomPointsX();
+    randomPointsY();
+
 }
