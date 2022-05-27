@@ -7,8 +7,10 @@
 #include "headers/stb_image.h"
 #include "headers/quadrant.hpp"
 #include "headers/RGB.hpp"
+#include "headers/grayscale.cpp"
 
 using namespace std;
+
 
 
 void sampling(int widthImage, int heightImage, unsigned char *image) {
@@ -115,3 +117,4 @@ int main(){
         sampling(widthImage, heightImage, image);
     }
 }
+
