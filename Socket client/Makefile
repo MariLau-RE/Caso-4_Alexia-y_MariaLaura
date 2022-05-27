@@ -2,6 +2,6 @@
 all: client
 
 client:
-	g++ -o socketclient.o socketclient.cpp
+	g++ -o socketWin.o socketWin.cpp
 
 # docker run -it --rm --net host -v C:\dev\cursostec\socketclient_c:/home gcc bash

@@ -1,6 +1,6 @@
 package painter;
 
-import javax.swing.JFrame;
+/*import javax.swing.JFrame;*/
 
 public class Controller {
 	private FacePainter frame;

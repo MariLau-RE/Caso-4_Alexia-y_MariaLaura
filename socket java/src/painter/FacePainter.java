@@ -1,13 +1,17 @@
 package painter;
 
 import java.awt.Color;
-import java.awt.Dimension;
+/*import java.awt.Dimension;*/
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JFrame;
 import socket.*;
 
 public class FacePainter extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Image offScreen;
 	
 	public FacePainter(String pTitle) {
