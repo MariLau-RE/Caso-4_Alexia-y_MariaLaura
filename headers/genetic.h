@@ -14,6 +14,8 @@ class GeneticBase {
         vector<individual*> *unfitnessPopulation;
         int populationQuantity;
         int targetGenerations;
+        int widthImage, heightImage;
+
 
 
         void evaluateFitness() {
@@ -31,12 +33,22 @@ class GeneticBase {
             }
         }
 
-        float fitness(individual *pIndividual) {
-            // aqui es donde más hay que hacer mente, cuál va a ser mi función de fitness
-            // la función de fitness tiene la responsabilidad de guiar la población
-            // pues es la que selecciona los mejores dado que esos están cada vez más cerca de la respuesta
-            return rand()%100;
+        float fitness(individual *pIndividual)     {
+        int Fitness = 0;
+        int distance;
+
+        for (individual *ind : *population)
+        {
+            // si las distancias relativas estÃ¡n entre sÃ­ a X unidades de distancia se consideran fit
+            distance = abs(ind->getDistance() - pIndividual->getDistance());
+            /*if (distance < )
+            {
+                Fitness++;
+            }*/
         }
+        cout << "Fitness value: " << Fitness << endl;
+        return Fitness;
+    }
 
         void reproduce(int pAmountOfChildrens) {
             // previous population will be cleared, full saved, partial saved --> depending on the problem
@@ -67,10 +79,10 @@ class GeneticBase {
 
             unsigned char kid = (pParent_a->getCromosoma() & mask_a) | (pParent_b->getCromosoma() & mask_b);
 
-            individual *children = new individual(kid);
+           // individual *children = new individual(kid , pointX1, pointY1, int pointX2, int pointY2, int pColor, int pSize, bool pShape);
 
             // hace falta la mutación, hay que agregar el % de mutación y la mutación en si misma
-            return children;
+           // return children;
         }
 
     public:
@@ -92,8 +104,8 @@ class GeneticBase {
 
             for(int i=0; i<pAmountOfIndividuals; i++) {
                 // aqui está asumiendo nibble de 8 bits, unsigned char
-                individual* p = new individual((unsigned char) rand()%CROMO_MAX_VALUE);
-                population->push_back(p);
+               // individual* p = new individual((unsigned char) rand()%CROMO_MAX_VALUE);
+                //population->push_back(p);
             }
         }
         
