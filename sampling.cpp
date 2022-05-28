@@ -11,7 +11,9 @@
 
 using namespace std;
 
-vector<vector<int>>Color;
+vector<vector<int>>Color={{12,12,12},{47,47,47},{50,50,50},{65,65,65},
+{83,83,83},{135,135,135},{161,161,161},{195,195,195},{220,220,220},{242,242,242}};
+
 
 bool grayIsClose(int pPointX, int pPointY, RGB imageRGB)
         {

@@ -1,6 +1,5 @@
 #ifndef _GENETICBASE_
 #define _GENETICBASE_ 1
-//#include "main.hpp"
 #include "headers/cromodistribution.h"
 #include "headers/individual.h"
 #include <vector>
