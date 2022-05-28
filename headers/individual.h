@@ -1,6 +1,11 @@
 #ifndef _INDIVIDUAL_
 #define _INDIVIDUAL_ 1
-#include "../main.hpp"
+//#include "../main.hpp"
+#include <iostream>
+#include <vector>
+#include <math.h>
+#include <cstdlib>
+#include <bits/stdc++.h>
 #define MIN_GENOTYPE_SIZE_BY_PARENT 2
 #define BOUND_MARGIN 0.05
 
