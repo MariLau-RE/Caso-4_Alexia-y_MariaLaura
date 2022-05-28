@@ -6,27 +6,46 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "headers/stb_image.h"
-#include "headers/quadrant.hpp"
 #include "headers/RGB.hpp"
 #include "headers/grayscale.cpp"
 
 using namespace std;
+
+vector<vector<int>>Color;
+
+bool grayIsClose(int pPointX, int pPointY, RGB imageRGB)
+        {
+            imageRGB.generateRGB(pPointX,pPointY);
+            for(int grayIndex=0; grayIndex<Color.size(); grayIndex++){
+
+                int rDist = abs(imageRGB.getRedColor()- Color[grayIndex][0]);
+                int gDist = abs(imageRGB.getGreenColor() - Color[grayIndex][1]);
+                int bDist = abs(imageRGB.getBlueColor()- Color[grayIndex][2]);
+
+                if(rDist + gDist + bDist > gray)
+                    return false;
+
+                return true;
+
+            }
+
+        }
 
 int calculateDimensions(int pRandomPointPosX, int pRandomPointPosY, int pMinPointX, int pMinPointY, int pMaxPointX, int pMaxPointY){
     int width = 0;
     int height = 0;
 
     if (pRandomPointPosX <= pMinPointX){ 
-        width = abs(randomPointPosX - maxPointX); 
+        width = abs(pRandomPointPosX - pMaxPointX); 
     }
     if (pRandomPointPosX >= pMaxPointX){ 
-        width = abs(randomPointPosX - minPointX); 
+        width = abs(pRandomPointPosX - pMinPointX); 
     }
     if (pRandomPointPosY <= pMinPointY){ 
-        height = abs(randomPointPosY - maxPointY); 
+        height = abs(pRandomPointPosY - pMaxPointX); 
     }
     if (pRandomPointPosY >= pMaxPointY){ 
-        height = abs(randomPointPosY - minPointY); 
+        height = abs(pRandomPointPosY - pMinPointX); 
     }
 
     return height * width;
@@ -40,7 +59,7 @@ tuple <int, int> getArea(vector<vector<int>> pAreasList){
         }
     } */
 
-    return {}
+    return {};
 }
 
 void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRGB) {
@@ -75,6 +94,11 @@ void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRG
             vector<int> lastPoint = pointsList.back(); // Get the last element of pointsList
             lastPointPosX = lastPoint[0];
             lastPointPosY = lastPoint[1];
+
+            imageRGB.generateRGB(randomPointPosX,randomPointPosY);
+            int grayRandomConvertion=((imageRGB.getRedColor()+0.299)*(imageRGB.getGreenColor()+0.587)*(imageRGB.getBlueColor()+0.114));
+            imageRGB.generateRGB(lastPointPosX,lastPointPosY);
+            int grayLastConvertion=((imageRGB.getRedColor()+0.299)*(imageRGB.getGreenColor()+0.587)*(imageRGB.getBlueColor()+0.114));
 
             // si el color del last NO es parecido al random (usar lo de la clase RGb para get los colores) entonces
                 // getArea() que recorre todas las areas para saber en cual area queda segun color, return vector area, indice

@@ -1,4 +1,7 @@
 #include <bits/stdc++.h>
+#include <math.h>
+#include <vector>
+#define gray 30
 using namespace std;
 
 class RGB{
@@ -6,6 +9,8 @@ class RGB{
         const size_t sizeRGB = 3;
         unsigned char *image;
         size_t indexRGB;
+        
+        
    
         int redColor;
         int greenColor;
@@ -18,8 +23,10 @@ class RGB{
             this->image = pImage;
         }
 
+
         void generateRGB(int pRandomPointX, int pRandomPointY){
             this->indexRGB = sizeRGB * (pRandomPointY * widthImage + pRandomPointX);
+            
         }
 
         int getRedColor(){ return image[indexRGB + 0]; }
