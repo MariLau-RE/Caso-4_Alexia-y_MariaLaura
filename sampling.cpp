@@ -118,9 +118,10 @@ void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRG
                 }
             
             pointsList.push_back({randomPointPosX,randomPointPosY});
+            totalPoints ++;
             areaPoints = calculateDimensions(randomPointPosX, randomPointPosY, minPointX, minPointY, maxPointX, maxPointY);
 
-            // si el color del last NO es parecido al random entonces
+            // si el color del last es parecido al random entonces
                 //reemplazar datos con los que se sacaron
             //else
                 areasList.push_back({areaPoints, totalPoints, maxPointX, maxPointY, minPointX, minPointY});
