@@ -19,9 +19,9 @@ int main() {
 
     // 1. Chromosomatic representation
     cromodistribution distribution[DISTRIBUTION_SIZE] = {
-        {"Ojos Azules", 0, 99, 0.00, 0.39, 400, 1000},
-        {"Ojos Negros", 100, 199, 0.39, 0.78, 400, 1000},
-        {"Ojos Verdes", 200, 255, 0.78, 1.00, 200, 1000}
+        /*{True, 0, 99, 0.00, 0.39, 400, 1000},
+        {False, 100, 199, 0.39, 0.78, 400, 1000},
+        {True, 200, 255, 0.78, 1.00, 200, 1000}*/
     };
 
 
