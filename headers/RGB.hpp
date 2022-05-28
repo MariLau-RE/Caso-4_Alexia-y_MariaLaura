@@ -13,10 +13,13 @@ class RGB{
         int widthImage;
         
     public:
-        RGB(unsigned char *pImage, int pRandomPointX, int pRandomPointY, int pWidth){
+        RGB(unsigned char *pImage, int pWidth){
             this->widthImage = pWidth;
             this->image = pImage;
-            this->indexRGB = sizeRGB * (pRandomPointY * pWidth + pRandomPointX);
+        }
+
+        void generateRGB(int pRandomPointX, int pRandomPointY){
+            this->indexRGB = sizeRGB * (pRandomPointY * widthImage + pRandomPointX);
         }
 
         int getRedColor(){ return image[indexRGB + 0]; }

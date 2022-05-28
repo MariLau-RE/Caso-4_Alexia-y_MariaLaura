@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <time.h>
 #include <vector>
+#include <tuple>
 #include <stdlib.h> 
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -11,10 +12,27 @@
 
 using namespace std;
 
+int calculateDimensions(int randomPointPosX, int randomPointPosY, int minPointX, int minPointY, int maxPointX, int maxPointY){
+    int width = 0;
+    int height = 0;
 
+    if (randomPointPosX <= minPointX){ 
+        width = abs(randomPointPosX - maxPointX); 
+    }
+    if (randomPointPosX >= maxPointX){ 
+        width = abs(randomPointPosX - minPointX); 
+    }
+    if (randomPointPosY <= minPointY){ 
+        height = abs(randomPointPosY - maxPointY); 
+    }
+    if (randomPointPosY >= maxPointY){ 
+        height = abs(randomPointPosY - minPointY); 
+    }
 
-void sampling(int widthImage, int heightImage, unsigned char *image) {
+    return height * width;
+}
 
+void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRGB) {
     // Generate a random point
     int randomPointPosX, randomPointPosY;
 
@@ -22,33 +40,37 @@ void sampling(int widthImage, int heightImage, unsigned char *image) {
     randomPointPosX = rand() % widthImage + 1;
     randomPointPosY = rand() % heightImage + 1;
 
-    // Calculate the RGB of the random point
-    RGB imageRGB = RGB(image, randomPointPosX, randomPointPosY, widthImage); // instance of RGB class
-    stbi_image_free(image);
-
     // Calculate the area
     int maxPointX = -1, maxPointY = -1, minPointY = -1, minPointX = -1;
     int lastPointPosX = 0, lastPointPosY = 0;
     int areaPoints = 0, widthArea = 0, heightArea= 0;
     vector<vector<int>> pointsList;
+    vector<vector<int>> areasList;
+    vector<vector<int>> tableProbs;
+    int pixels = ((widthImage * heightImage) * 0.40);
 
-    for(int i=0; i<3; i++){
+    while (pixels > 0) {
+        int totalPoints = 0;
+
         if (pointsList.empty()){
             pointsList.push_back({randomPointPosX,randomPointPosY});
         }
         else{
+            // calculateTableProbs(lista de areas)
+
             randomPointPosX = rand() % widthImage + 1;
             randomPointPosY = rand() % heightImage + 1;
 
-            // si el color es parecido (usar lo de la clase RGb para get los colores) entonces
-                // aqui creo que funcion que recorra toda las lista de puntos y compare area para saber en cual se agrega
-            // else
-                vector<int> lastPoint = pointsList.back(); // Get the last element of pointsList
-                lastPointPosX = lastPoint[0];
-                lastPointPosY = lastPoint[1];
+            vector<int> lastPoint = pointsList.back(); // Get the last element of pointsList
+            lastPointPosX = lastPoint[0];
+            lastPointPosY = lastPoint[1];
 
-                // Check the maximum and minimum points
-                if (maxPointX == -1 && maxPointY == -1 && minPointX == -1 && minPointY == -1){
+            // si el color del last NO es parecido al random (usar lo de la clase RGb para get los colores) entonces
+                // funcion que recorre todas las areas para saber en cual area queda segun color, return vector area, indice
+                // de la area que si sea saco el maximo de X y Y, minimo de X y y, puntostotales
+
+            // Check the maximum and minimum points
+            if (maxPointX == -1 && maxPointY == -1 && minPointX == -1 && minPointY == -1){
                     if (lastPointPosX >= randomPointPosX){
                         minPointX = randomPointPosX;
                         maxPointX = lastPointPosX;
@@ -66,42 +88,22 @@ void sampling(int widthImage, int heightImage, unsigned char *image) {
                         maxPointY = randomPointPosY;
                     }
                 }
-                else {
-                    if (randomPointPosX > maxPointX){
-                        maxPointX = randomPointPosX;
-                    }
-                    if (randomPointPosY > maxPointY){
-                        maxPointY = randomPointPosY;
-                    }
-                    if (randomPointPosY < minPointY){
-                        minPointY = randomPointPosY;
-                    }
-                    if (randomPointPosX < minPointX){
-                        minPointX = randomPointPosX;
-                    }
+            else {
+                    if (randomPointPosX > maxPointX){ maxPointX = randomPointPosX; }
+                    if (randomPointPosY > maxPointY){ maxPointY = randomPointPosY; }
+                    if (randomPointPosY < minPointY){ minPointY = randomPointPosY; }
+                    if (randomPointPosX < minPointX){ minPointX = randomPointPosX; }
                 }
+            
+            pointsList.push_back({randomPointPosX,randomPointPosY});
+            areaPoints = calculateDimensions(randomPointPosX, randomPointPosY, minPointX, minPointY, maxPointX, maxPointY);
 
-                pointsList.push_back({randomPointPosX,randomPointPosY}); // agrega el punto random
-        
-                if (randomPointPosX <= minPointX){ 
-                    widthArea = abs(randomPointPosX - maxPointX); 
-                }
-                if (randomPointPosX >= maxPointX){ 
-                    widthArea = abs(randomPointPosX - minPointX); 
-                }
-                if (randomPointPosY <= minPointY){ 
-                    heightArea = abs(randomPointPosY - maxPointY); 
-                }
-                if (randomPointPosY >= maxPointY){ 
-                    heightArea = abs(randomPointPosY - minPointY); 
-                }
-
-                areaPoints = widthArea * heightArea;
-                cout << endl;
-                cout << "Iteracion numero " << i << endl;
-                cout << "areaPoints: " << areaPoints << endl;
-                // aqui se guarda el area etc etc
+            // si el color del last NO es parecido al random (usar lo de la clase RGb para get los colores) entonces
+                //reemplzar datos con los que se sacaron
+            //else
+                areasList.push_back({areaPoints});
         }
+        pixels --;
     }
 }
 
@@ -110,11 +112,14 @@ int main(){
     int widthImage, heightImage, channelsImage;
     unsigned char *image = stbi_load("images/image.jpg", &widthImage, &heightImage, &channelsImage, 0);
 
+    RGB imageRGB = RGB(image, widthImage); // instance of RGB class
+    stbi_image_free(image);
+
     if(image == NULL) { 
         cout << "Image not loaded" << endl;
     } 
     else {
-        sampling(widthImage, heightImage, image);
+        sampling(widthImage, heightImage, image, imageRGB);
     }
 }
 
