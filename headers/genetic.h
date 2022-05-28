@@ -5,7 +5,6 @@
 #include "headers/individual.h"
 #include <vector>
 
-
 using namespace std;
 
 class GeneticBase {
@@ -69,10 +68,10 @@ class GeneticBase {
 
             unsigned char kid = (pParent_a->getCromosoma() & mask_a) | (pParent_b->getCromosoma() & mask_b);
 
-            //individual *children = new individual(kid, p1X, p1Y, p2X,  p2Y,  pColor, size,  pType);
+            individual *children = new individual(kid);
 
             // hace falta la mutación, hay que agregar el % de mutación y la mutación en si misma
-            //return children;
+            return children;
         }
 
     public:
@@ -94,8 +93,8 @@ class GeneticBase {
 
             for(int i=0; i<pAmountOfIndividuals; i++) {
                 // aqui está asumiendo nibble de 8 bits, unsigned char
-                //individual* p = new individual((unsigned char) rand()%CROMO_MAX_VALUE);
-                //population->push_back(p);
+                individual* p = new individual((unsigned char) rand()%CROMO_MAX_VALUE);
+                population->push_back(p);
             }
         }
         

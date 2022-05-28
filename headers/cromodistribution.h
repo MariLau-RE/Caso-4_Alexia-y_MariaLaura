@@ -6,31 +6,21 @@
 
 using namespace std;
 
-
-struct cromodistribution
-{
-    // centroide y valores de lineas
-    int x1Value;
-    int y1Value;
-    int x2Value;
-    int y2Value;
-    // tamaño en pixeles
+struct cromodistribution {
+    int x1Coordinate;
+    int x2Coordinate;
+    int y1Coordinate;
+    int y2Coordinate;
     int area;
-    // color grayscale
-    int color;
-    // true-> punto, false-> linea
-    bool tipo;
-    // rango probabilidad
-
+    int grayscale;
+    bool shape;
     float minProbability;
     float maxProbability;
-    // rango valores del gen
     unsigned int minValue;
     unsigned int maxValue;
-    // cantidad de pixeles
     int quantity;
-    // total poblacion
     int totalPopulation;
 };
+
 
 #endif
