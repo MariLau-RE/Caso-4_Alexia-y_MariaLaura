@@ -12,24 +12,35 @@
 
 using namespace std;
 
-int calculateDimensions(int randomPointPosX, int randomPointPosY, int minPointX, int minPointY, int maxPointX, int maxPointY){
+int calculateDimensions(int pRandomPointPosX, int pRandomPointPosY, int pMinPointX, int pMinPointY, int pMaxPointX, int pMaxPointY){
     int width = 0;
     int height = 0;
 
-    if (randomPointPosX <= minPointX){ 
+    if (pRandomPointPosX <= pMinPointX){ 
         width = abs(randomPointPosX - maxPointX); 
     }
-    if (randomPointPosX >= maxPointX){ 
+    if (pRandomPointPosX >= pMaxPointX){ 
         width = abs(randomPointPosX - minPointX); 
     }
-    if (randomPointPosY <= minPointY){ 
+    if (pRandomPointPosY <= pMinPointY){ 
         height = abs(randomPointPosY - maxPointY); 
     }
-    if (randomPointPosY >= maxPointY){ 
+    if (pRandomPointPosY >= pMaxPointY){ 
         height = abs(randomPointPosY - minPointY); 
     }
 
     return height * width;
+}
+
+tuple <int, int> getArea(vector<vector<int>> pAreasList){
+
+    /* for (int indexArea = 0; indexArea < pAreasList.size(); indexArea++){
+        if (){
+
+        }
+    } */
+
+    return {}
 }
 
 void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRGB) {
@@ -66,7 +77,7 @@ void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRG
             lastPointPosY = lastPoint[1];
 
             // si el color del last NO es parecido al random (usar lo de la clase RGb para get los colores) entonces
-                // funcion que recorre todas las areas para saber en cual area queda segun color, return vector area, indice
+                // getArea() que recorre todas las areas para saber en cual area queda segun color, return vector area, indice
                 // de la area que si sea saco el maximo de X y Y, minimo de X y y, puntostotales
 
             // Check the maximum and minimum points
@@ -99,7 +110,7 @@ void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRG
             areaPoints = calculateDimensions(randomPointPosX, randomPointPosY, minPointX, minPointY, maxPointX, maxPointY);
 
             // si el color del last NO es parecido al random (usar lo de la clase RGb para get los colores) entonces
-                //reemplzar datos con los que se sacaron
+                //reemplazar datos con los que se sacaron
             //else
                 areasList.push_back({areaPoints});
         }
