@@ -14,24 +14,19 @@ using namespace std;
 vector<vector<int>>Color={{12,12,12},{47,47,47},{50,50,50},{65,65,65},
 {83,83,83},{135,135,135},{161,161,161},{195,195,195},{220,220,220},{242,242,242}};
 
+bool grayIsClose(int pPointX, int pPointY, RGB imageRGB){
+    imageRGB.generateRGB(pPointX,pPointY);
+    for(int grayIndex=0; grayIndex<Color.size(); grayIndex++){
+        int rDist = abs(imageRGB.getRedColor()- Color[grayIndex][0]);
+        int gDist = abs(imageRGB.getGreenColor() - Color[grayIndex][1]);
+        int bDist = abs(imageRGB.getBlueColor()- Color[grayIndex][2]);
 
-bool grayIsClose(int pPointX, int pPointY, RGB imageRGB)
-        {
-            imageRGB.generateRGB(pPointX,pPointY);
-            for(int grayIndex=0; grayIndex<Color.size(); grayIndex++){
+        if(rDist + gDist + bDist > gray)
+            return false;
 
-                int rDist = abs(imageRGB.getRedColor()- Color[grayIndex][0]);
-                int gDist = abs(imageRGB.getGreenColor() - Color[grayIndex][1]);
-                int bDist = abs(imageRGB.getBlueColor()- Color[grayIndex][2]);
-
-                if(rDist + gDist + bDist > gray)
-                    return false;
-
-                return true;
-
-            }
-
-        }
+        return true;
+    }
+}
 
 int calculateDimensions(int pRandomPointPosX, int pRandomPointPosY, int pMinPointX, int pMinPointY, int pMaxPointX, int pMaxPointY){
     int width = 0;
@@ -51,17 +46,6 @@ int calculateDimensions(int pRandomPointPosX, int pRandomPointPosY, int pMinPoin
     }
 
     return height * width;
-}
-
-tuple <int, int> getArea(vector<vector<int>> pAreasList){
-
-    /* for (int indexArea = 0; indexArea < pAreasList.size(); indexArea++){
-        if (){
-
-        }
-    } */
-
-    return {};
 }
 
 void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRGB) {
@@ -102,9 +86,10 @@ void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRG
             imageRGB.generateRGB(lastPointPosX,lastPointPosY);
             int grayLastConvertion=((imageRGB.getRedColor()+0.299)*(imageRGB.getGreenColor()+0.587)*(imageRGB.getBlueColor()+0.114));
 
-            // si el color del last NO es parecido al random (usar lo de la clase RGb para get los colores) entonces
-                // getArea() que recorre todas las areas para saber en cual area queda segun color, return vector area, indice
+            if (grayRandomConvertion == grayLastConvertion){ // it could not compare if they are similar
+                // funcion que recorre todas las areas para saber en cual area queda segun min max, return vector area, indice
                 // de la area que si sea saco el maximo de X y Y, minimo de X y y, puntostotales
+            }
 
             // Check the maximum and minimum points
             if (maxPointX == -1 && maxPointY == -1 && minPointX == -1 && minPointY == -1){
@@ -135,10 +120,10 @@ void sampling(int widthImage, int heightImage, unsigned char *image, RGB imageRG
             pointsList.push_back({randomPointPosX,randomPointPosY});
             areaPoints = calculateDimensions(randomPointPosX, randomPointPosY, minPointX, minPointY, maxPointX, maxPointY);
 
-            // si el color del last NO es parecido al random (usar lo de la clase RGb para get los colores) entonces
+            // si el color del last NO es parecido al random entonces
                 //reemplazar datos con los que se sacaron
             //else
-                areasList.push_back({areaPoints});
+                areasList.push_back({areaPoints, totalPoints, maxPointX, maxPointY, minPointX, minPointY});
         }
         pixels --;
     }
